@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>HalpBot Dashboard: Questions</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <!-- Refer to https://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html#using-theach for syntax -->
+    <h2>Quiz Questions</h2>
+    <div class="split left"></div>
+        <table class="datatable">
+            <tr>
+                <th class="small">Id</th>
+                <th class="medium">Topic</th>
+                <th class="large">Question</th>
+                <th class="large">Answer</th>
+                <th class="large">Option B</th>
+                <th class="large">Option C</th>
+                <th class="large">Option D</th>
+            </tr>
+            <tr th:each="question, iterStatus : ${questions}" th:class="${iterStatus.even} ? 'white' : 'grey'">
+                <td th:text="${question.id()}"></td>
+                <td th:text="${question.topic()}"></td>
+                <td th:text="${question.question()}"></td>
+                <td th:text="${question.answer()}"></td>
+                <td th:text="${question.optionB()}"></td>
+                <td th:text="${question.optionC()}"></td>
+                <td th:text="${question.optionD()}"></td>
+            </tr>
+        </table>
+    <div class="split side-pane grey">
+        <h3>Edit Question</h3>
+    </div>
+</body>
+</html>
