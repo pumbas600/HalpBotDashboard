@@ -31,6 +31,12 @@
         </table>
     <div class="split side-pane grey">
         <h3>Edit Question</h3>
+        <form th:action="@{/addquestion}" th:object="${question}" method="post">
+            <div>
+                <label th:for="${#ids.next('id')}">Id:</label>
+                <input type="number" th:field="*{id}"/>
+            </div>
+        </form>
     </div>
 </body>
 </html>
