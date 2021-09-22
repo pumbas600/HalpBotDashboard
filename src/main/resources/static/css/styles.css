@@ -1,6 +1,23 @@
-body {
-    margin: 15px;
+/* Misc */
+
+.small-column {
+    width: 80px;
 }
+
+.medium-column {
+    width: 140px;
+}
+
+.large-column {
+    width: 220px;
+}
+
+.hide {
+    display: none;
+    visibility: hidden;
+}
+
+/* Home Page */
 
 .split {
     height: 100%;
@@ -42,18 +59,6 @@ body {
 
 /* Grids */
 
-.small {
-    width: 50px;
-}
-
-.medium {
-    width: 100px
-}
-
-.large {
-    width: 250px
-}
-
 .white {
     background-color: white;
 }
@@ -62,29 +67,36 @@ body {
     background-color: #eceaea;
 }
 
+.margin {
+    margin: 20px;
+}
+
 .datatable {
     width: 80%;
     table-layout: fixed;
     overflow-x: scroll;
-}
-
-.datatable th {
-    text-align: left;
+    border: 1px solid #eceaea;
 }
 
 .datatable td, .datatable th {
-    overflow-x: hidden;
-    padding: 10px;
-    border-spacing: 15px;
+    padding: 8px;
 }
 
 .datatable tr:hover {
     background-color: #f1a6a6;
 }
 
+.selected-row {
+    border: 2px solid #75b8ef;
+}
+
 .side-pane {
     padding: 20px;
-    width: 16%;
+    width: 20%;
     right: 0;
     height: 100%
+}
+
+.side-pane td {
+    padding: 5px;
 }

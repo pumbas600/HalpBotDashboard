@@ -4,38 +4,73 @@
     <meta charset="UTF-8">
     <title>HalpBot Dashboard: Questions</title>
     <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="js/questions.js"></script>
 </head>
 <body>
     <!-- Refer to https://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html#using-theach for syntax -->
-    <h2>Quiz Questions</h2>
-    <div class="split left"></div>
+    <div class="margin">
+        <h2>Quiz Questions</h2>
         <table class="datatable">
             <tr>
-                <th class="small">Id</th>
-                <th class="medium">Topic</th>
-                <th class="large">Question</th>
-                <th class="large">Answer</th>
-                <th class="large">Option B</th>
-                <th class="large">Option C</th>
-                <th class="large">Option D</th>
+                <th class="small-column">Id</th>
+                <th class="medium-column">Topic</th>
+                <th class="large-column">Question</th>
+                <th class="large-column">Answer</th>
+                <th class="large-column">Option B</th>
+                <th class="large-column">Option C</th>
+                <th  class="large-column">Option D</th>
             </tr>
             <tr th:each="question, iterStatus : ${questions}" th:class="${iterStatus.even} ? 'white' : 'grey'">
-                <td th:text="${question.id()}"></td>
-                <td th:text="${question.topic()}"></td>
-                <td th:text="${question.question()}"></td>
-                <td th:text="${question.answer()}"></td>
-                <td th:text="${question.optionB()}"></td>
-                <td th:text="${question.optionC()}"></td>
-                <td th:text="${question.optionD()}"></td>
+                <td th:text="${question.getId()}"></td>
+                <td th:text="${question.getTopic()}"></td>
+                <td th:text="${question.getQuestion()}"></td>
+                <td th:text="${question.getAnswer()}"></td>
+                <td th:text="${question.getOptionB()}"></td>
+                <td th:text="${question.getOptionC()}"></td>
+                <td th:text="${question.getOptionD()}"></td>
             </tr>
         </table>
+    </div>
     <div class="split side-pane grey">
-        <h3>Edit Question</h3>
-        <form th:action="@{/addquestion}" th:object="${question}" method="post">
-            <div>
-                <label th:for="${#ids.next('id')}">Id:</label>
-                <input type="number" th:field="*{id}"/>
+        <h3 class="add-form question-form-title">Add Question</h3>
+        <h3 class="edit-form question-form-title hide">Edit Question</h3>
+        <form id="question-form" th:action="@{/add-question}" th:object="${question}" method="post">
+            <div class="form-group">
+                <label>Id:</label>
+                <div class="form-control" readonly="readonly">This is automatically generated</div>
             </div>
+            <div class="form-group">
+                <label>Topic:</label>
+                <select class="form-control" th:field="*{topicId}">
+                    <option th:each="topic : ${topics}"
+                            th:value="${topic.getId()}"
+                            th:text="${topic.getTopic()}">
+                    </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Question:</label>
+                <textarea class="form-control" required th:field="*{question}"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Answer:</label>
+                <textarea class="form-control" required th:field="*{answer}"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Option B:</label>
+                <textarea class="form-control" required th:field="*{optionB}"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Option C:</label>
+                <textarea class="form-control" th:field="*{optionC}"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Option D:</label>
+                <textarea class="form-control" th:field="*{optionD}"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
 </body>
