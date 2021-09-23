@@ -1,21 +1,29 @@
-package nz.pumbas.halpbotdashboard.models;
+package nz.pumbas.halpbotdashboard.hibernate.models;
 
-import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-public final class Question {
+@Entity
+@Table(name = "QUESTIONS")
+public class Question {
 
-    private long id;
-    private long topicId;
-    private String topic;
+    @Id
+    @GeneratedValue
+    private Long id;
+    private Long topicId;
     private String question;
     private String answer;
     private String optionB;
     private String optionC;
     private String optionD;
+    private String explanation;
+    private String image;
 
     public Question() {  }
 
-    public Question(long id, long topicId, String question, String answer, String optionB, String optionC, String optionD) {
+    public Question(Long id, Long topicId, String question, String answer, String optionB, String optionC, String optionD) {
         this.id = id;
         this.topicId = topicId;
         this.question = question;
@@ -25,26 +33,12 @@ public final class Question {
         this.optionD = optionD;
     }
 
-    public Question(long id, String topic, String question, String answer, String optionB, String optionC, String optionD) {
-        this.id = id;
-        this.topic = topic;
-        this.question = question;
-        this.answer = answer;
-        this.optionB = optionB;
-        this.optionC = optionC;
-        this.optionD = optionD;
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public long getTopicId() {
+    public Long getTopicId() {
         return topicId;
-    }
-
-    public String getTopic() {
-        return topic;
     }
 
     public String getQuestion() {
@@ -67,16 +61,20 @@ public final class Question {
         return optionD;
     }
 
-    public void setId(long id) {
+    public String getExplanation() {
+        return explanation;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public void setTopicId(long topicId) {
+    public void setTopicId(Long topicId) {
         this.topicId = topicId;
-    }
-
-    public void setTopic(String topic) {
-        this.topic = topic;
     }
 
     public void setQuestion(String question) {
@@ -99,12 +97,19 @@ public final class Question {
         this.optionD = optionD;
     }
 
+    public void setExplanation(String explanation) {
+        this.explanation = explanation;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     @Override
     public String toString() {
         return "Question{" +
                 "id=" + id +
                 ", topicId=" + topicId +
-                ", topic='" + topic + '\'' +
                 ", question='" + question + '\'' +
                 ", answer='" + answer + '\'' +
                 ", optionB='" + optionB + '\'' +

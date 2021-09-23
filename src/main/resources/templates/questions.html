@@ -22,9 +22,9 @@
                 <th class="large-column">Option C</th>
                 <th  class="large-column">Option D</th>
             </tr>
-            <tr th:each="question, iterStatus : ${questions}" th:class="${iterStatus.even} ? 'white' : 'grey'">
+            <tr th:each="question, iterStatus : ${questions}" th:class="(${iterStatus.even} ? 'white' : 'grey') + ' data-row'">
                 <td th:text="${question.getId()}"></td>
-                <td th:text="${question.getTopic()}"></td>
+                <td th:text="${topics[__${question.getTopicId() - 1}__].getTopic()}" th:data-value="${question.getTopicId()}" ></td>
                 <td th:text="${question.getQuestion()}"></td>
                 <td th:text="${question.getAnswer()}"></td>
                 <td th:text="${question.getOptionB()}"></td>
@@ -39,7 +39,7 @@
         <form id="question-form" th:action="@{/add-question}" th:object="${question}" method="post">
             <div class="form-group">
                 <label>Id:</label>
-                <div class="form-control" readonly="readonly">This is automatically generated</div>
+                <div id="id" class="form-control" readonly="readonly">This is automatically generated</div>
             </div>
             <div class="form-group">
                 <label>Topic:</label>

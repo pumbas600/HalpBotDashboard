@@ -1,19 +1,34 @@
-$(function() {
+let addFormIdMessage;
 
-    $('.datatable tr').each(function(itself, row) {
+$(function() {
+    addFormIdMessage = $('#id').text();
+
+    $('.data-row').each(function(itself, row) {
         row = $(row);
         row.click(function() {
+            const selectedRow = $('.selected-row');
+            const isSelectedRow = row.hasClass('selected-row');
             // Remove the class from the previously selected row
-            $('.selected-row').removeClass('.selected-row');
+            selectedRow.removeClass('selected-row');
 
-            ToggleForms(row);
-            row.toggleClass('selected-row');
+            if (!isSelectedRow) {
+                if ($('.edit-form').hasClass('hide')) {
+                    ToggleForms();
+                }
+
+                // If they've clicked on the selected row, they're unselecting the row so don't re-select it.
+                row.addClass('selected-row');
+                UpdateQuestionForm(row);
+            }
+            else if ($('.add-form').hasClass('hide')) {
+                ToggleForms();
+            }
         });
     });
 
 });
 
-function ToggleForms(row) {
+function ToggleForms() {
     const form = $('#question-form');
     const addForm = $('.add-form');
 
@@ -23,26 +38,27 @@ function ToggleForms(row) {
     if (addForm.hasClass('hide')) {
         // Edit Question Form
         form.attr('action', '/edit-question');
-        UpdateQuestionForm(row);
     }
     else {
         // Add Question Form
         form.attr('action', '/add-question');
         ClearQuestionForm();
     }
-
-
 }
 
-function UpdateQuestionForm(row) {
-    $('#id').text(row.children()[0].getInnerHTML());
-    //$('#topicId').select(row.children()[1].getInnerHTML());
-    $('#question').val(row.children()[2].getInnerHtml());
+function UpdateQuestionForm() {
+    $('#id').text($('.selected-row td:nth-child(1)').text());
+    $('#topicId').val($('.selected-row td:nth-child(2)').attr('data-value'));
+    $('#question').val($('.selected-row td:nth-child(3)').text());
+    $('#answer').val($('.selected-row td:nth-child(4)').text());
+    $('#optionB').val($('.selected-row td:nth-child(5)').text());
+    $('#optionC').val($('.selected-row td:nth-child(6)').text());
+    $('#optionD').val($('.selected-row td:nth-child(7)').text());
 }
 
 function ClearQuestionForm() {
-    $('#id').text('This is automatically generated');
-    //$('#topicId').select(1);
+    $('#id').text(addFormIdMessage);
+    $('#topicId').val(1);
     $('#question').val('');
     $('#answer').val('');
     $('#optionB').val('');

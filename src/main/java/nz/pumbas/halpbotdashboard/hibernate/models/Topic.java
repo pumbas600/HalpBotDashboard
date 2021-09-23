@@ -1,22 +1,22 @@
-package nz.pumbas.halpbotdashboard.models;
+package nz.pumbas.halpbotdashboard.hibernate.models;
 
-public final class Topic {
+public class Topic {
 
-    private long id;
+    private Long id;
     private String topic;
 
     public Topic() { }
 
-    public Topic(long id, String topic) {
+    public Topic(Long id, String topic) {
         this.id = id;
         this.topic = topic;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
