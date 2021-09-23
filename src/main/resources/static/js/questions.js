@@ -1,7 +1,26 @@
 let addFormIdMessage;
+let imageInput;
+
+let typingTimer;                  //timer identifier
+const doneTypingInterval = 1000;  //time in ms
+
 
 $(function() {
     addFormIdMessage = $('#id').text();
+    imageInput = $('#image');
+
+    const previewImage = $('#previewImage');
+    previewImage.on('error', function() {
+        previewImage.addClass('hide');
+    });
+
+    //on keyup, start the countdown
+    imageInput.keyup(function(){
+        clearTimeout(typingTimer);
+        if (imageInput.val()) {
+            typingTimer = setTimeout(ShowPreviewImage, doneTypingInterval);
+        }
+    });
 
     $('.data-row').each(function(itself, row) {
         row = $(row);
@@ -54,6 +73,16 @@ function UpdateQuestionForm() {
     $('#optionB').val($('.selected-row td:nth-child(5)').text());
     $('#optionC').val($('.selected-row td:nth-child(6)').text());
     $('#optionD').val($('.selected-row td:nth-child(7)').text());
+    $('#explanation').val($('.selected-row td:nth-child(8)').text());
+
+    const imageValue = $('.selected-row td:nth-child(9)').text();
+    imageInput.val(imageValue);
+    PreviewImage(imageValue);
+
+}
+
+function ShowPreviewImage() {
+    PreviewImage(imageInput.val());
 }
 
 function ClearQuestionForm() {
@@ -64,4 +93,19 @@ function ClearQuestionForm() {
     $('#optionB').val('');
     $('#optionC').val('');
     $('#optionD').val('');
+    $('#explanation').val('');
+    imageInput.val('');
+    $('#previewImage').addClass('hide');
+}
+
+function PreviewImage(url) {
+    const previewImage = $('#previewImage');
+    if (url) {
+        previewImage.attr('src', url);
+        previewImage.removeClass('hide');
+    }
+    else {
+        previewImage.addClass('hide');
+    }
+
 }

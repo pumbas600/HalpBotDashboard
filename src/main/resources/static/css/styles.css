@@ -1,15 +1,27 @@
 /* Misc */
 
 .small-column {
-    width: 80px;
+    min-width: 30px;
+    max-width: 80px;
 }
 
 .medium-column {
-    width: 140px;
+    min-width: 150px;
+    max-width: 175px;
 }
 
 .large-column {
-    width: 220px;
+    min-width: 250px;
+    max-width:300px;
+}
+
+.extra-large-column {
+    min-width: 400px;
+    max-width: 500px;
+}
+
+.expand-on-hover:hover {
+    white-space: initial;
 }
 
 .hide {
@@ -72,14 +84,26 @@
 }
 
 .datatable {
-    width: 80%;
     table-layout: fixed;
-    overflow-x: scroll;
-    border: 1px solid #eceaea;
+    border: 1px solid #d7d7d7;
+}
+
+.table-container {
+    width: 80%;
+    overflow-x: auto;
+}
+
+.data-row {
+    white-space: nowrap;
 }
 
 .datatable td, .datatable th {
-    padding: 8px;
+    padding: 5px;
+    border: 1px solid #d7d7d7;
+    border-top: none;
+    border-bottom: none;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
 }
 
 .data-row:hover {
@@ -91,13 +115,31 @@
     background-color: #bceaad;
 }
 
+.hide-overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .side-pane {
     padding: 20px;
     width: 20%;
     right: 0;
-    height: 100%
+    height: 100%;
+    position: absolute;
 }
 
-.side-pane td {
-    padding: 5px;
+.form-control-aligned {
+    display: inline-block !important;
+    width: 80% !important;
+}
+
+.aligned-form-group {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+#previewImage {
+    width: 100%;
+    padding: 10px;
 }

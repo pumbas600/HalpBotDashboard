@@ -34,6 +34,8 @@ public class UppercasePhysicalNamingStrategy implements PhysicalNamingStrategy
     }
 
     private Identifier convertToUppercase(Identifier identifier) {
+        if (null == identifier) return null;
+
         final String newIdentifier = identifier.getText().toUpperCase(Locale.ROOT);
         return Identifier.toIdentifier(newIdentifier);
     }

@@ -12,38 +12,64 @@
     <!-- Refer to https://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html#using-theach for syntax -->
     <div class="margin">
         <h2>Quiz Questions</h2>
-        <table class="datatable">
-            <tr>
-                <th class="small-column">Id</th>
-                <th class="medium-column">Topic</th>
-                <th class="large-column">Question</th>
-                <th class="large-column">Answer</th>
-                <th class="large-column">Option B</th>
-                <th class="large-column">Option C</th>
-                <th  class="large-column">Option D</th>
-            </tr>
-            <tr th:each="question, iterStatus : ${questions}" th:class="(${iterStatus.even} ? 'white' : 'grey') + ' data-row'">
-                <td th:text="${question.getId()}"></td>
-                <td th:text="${topics[__${question.getTopicId() - 1}__].getTopic()}" th:data-value="${question.getTopicId()}" ></td>
-                <td th:text="${question.getQuestion()}"></td>
-                <td th:text="${question.getAnswer()}"></td>
-                <td th:text="${question.getOptionB()}"></td>
-                <td th:text="${question.getOptionC()}"></td>
-                <td th:text="${question.getOptionD()}"></td>
-            </tr>
-        </table>
+        <div class="table-container">
+            <table class="datatable">
+                <tr>
+                    <th class="small-column">Id</th>
+                    <th class="medium-column">Topic</th>
+                    <th class="extra-large-column">Question</th>
+                    <th class="extra-large-column">Answer</th>
+                    <th class="large-column">Option B</th>
+                    <th class="large-column">Option C</th>
+                    <th class="large-column">Option D</th>
+                    <th class="extra-large-column">Explanation</th>
+                    <th class="medium-column">Image</th>
+                </tr>
+                <tr th:each="question, iterStatus : ${questions}" th:class="(${iterStatus.even} ? 'white' : 'grey') + ' data-row'">
+                    <td class="small-column"
+                        th:text="${question.getId()}">
+                    </td>
+                    <td class="medium-column"
+                        th:text="${topics[__${question.getTopicId() - 1}__].getTopic()}" th:data-value="${question.getTopicId()}">
+                    </td>
+                    <td class="extra-large-column expand-on-hover"
+                        th:text="${question.getQuestion()}">
+                    </td>
+                    <td class="extra-large-column expand-on-hover"
+                        th:text="${question.getAnswer()}">
+                    </td>
+                    <td class="large-column expand-on-hover"
+                        th:text="${question.getOptionB()}">
+                    </td>
+                    <td class="large-column expand-on-hover"
+                        th:text="${question.getOptionC()}">
+                    </td>
+                    <td class="large-column expand-on-hover"
+                        th:text="${question.getOptionD()}">
+                    </td>
+                    <td class="extra-large-column expand-on-hover"
+                        th:text="${question.getExplanation()}">
+                    </td>
+                    <td class="medium-column expand-on-hover"
+                        th:text="${question.getImage()}">
+                    </td>
+                </tr>
+            </table>
+        </div>
+
     </div>
     <div class="split side-pane grey">
         <h3 class="add-form question-form-title">Add Question</h3>
         <h3 class="edit-form question-form-title hide">Edit Question</h3>
+
         <form id="question-form" th:action="@{/add-question}" th:object="${question}" method="post">
-            <div class="form-group">
+            <div class="aligned-form-group">
                 <label>Id:</label>
-                <div id="id" class="form-control" readonly="readonly">This is automatically generated</div>
+                <div id="id" class="float-right form-control-aligned hide-overflow form-control" readonly="readonly">Automatically generated</div>
             </div>
-            <div class="form-group">
+            <div class="aligned-form-group">
                 <label>Topic:</label>
-                <select class="form-control" th:field="*{topicId}">
+                <select class=" float-right form-control-aligned form-control" th:field="*{topicId}">
                     <option th:each="topic : ${topics}"
                             th:value="${topic.getId()}"
                             th:text="${topic.getTopic()}">
@@ -69,6 +95,15 @@
             <div class="form-group">
                 <label>Option D:</label>
                 <textarea class="form-control" th:field="*{optionD}"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Explanation:</label>
+                <textarea class="form-control" th:field="*{explanation}"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Image Link:</label>
+                <input type="text" class="form-control" th:field="*{image}"/>
+                <img id="previewImage" class="hide" src="" alt="Preview Image">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
