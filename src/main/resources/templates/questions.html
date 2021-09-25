@@ -65,7 +65,8 @@
         <form id="question-form" th:action="@{/add-question}" th:object="${question}" method="post">
             <div class="aligned-form-group">
                 <label>Id:</label>
-                <div id="id" class="float-right form-control-aligned hide-overflow form-control" readonly="readonly">Automatically generated</div>
+                <div id="idField" class="float-right form-control-aligned hide-overflow form-control" readonly="readonly">Automatically generated</div>
+                <input type="number" class="hide" th:field="*{id}" placeholder="-1"/>
             </div>
             <div class="aligned-form-group">
                 <label>Topic:</label>

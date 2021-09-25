@@ -1,7 +1,16 @@
 package nz.pumbas.halpbotdashboard.hibernate.models;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "TOPICS")
 public class Topic {
 
+    @Id
+    @GeneratedValue
     private Long id;
     private String topic;
 

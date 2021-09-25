@@ -1,5 +1,8 @@
 package nz.pumbas.halpbotdashboard.hibernate.models;
 
+import java.io.Serializable;
+import java.util.Objects;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -7,7 +10,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "QUESTIONS")
-public class Question {
+public class Question implements Serializable
+{
 
     @Id
     @GeneratedValue
@@ -22,16 +26,6 @@ public class Question {
     private String image;
 
     public Question() {  }
-
-    public Question(Long id, Long topicId, String question, String answer, String optionB, String optionC, String optionD) {
-        this.id = id;
-        this.topicId = topicId;
-        this.question = question;
-        this.answer = answer;
-        this.optionB = optionB;
-        this.optionC = optionC;
-        this.optionD = optionD;
-    }
 
     public Long getId() {
         return id;
@@ -106,15 +100,23 @@ public class Question {
     }
 
     @Override
-    public String toString() {
-        return "Question{" +
-                "id=" + id +
-                ", topicId=" + topicId +
-                ", question='" + question + '\'' +
-                ", answer='" + answer + '\'' +
-                ", optionB='" + optionB + '\'' +
-                ", optionC='" + optionC + '\'' +
-                ", optionD='" + optionD + '\'' +
-                '}';
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Question question1 = (Question) o;
+        return Objects.equals(id, question1.id)
+            && Objects.equals(topicId, question1.topicId)
+            && Objects.equals(question, question1.question)
+            && Objects.equals(answer, question1.answer)
+            && Objects.equals(optionB, question1.optionB)
+            && Objects.equals(optionC, question1.optionC)
+            && Objects.equals(optionD, question1.optionD)
+            && Objects.equals(explanation, question1.explanation)
+            && Objects.equals(image, question1.image);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, topicId, question, answer, optionB, optionC, optionD, explanation, image);
     }
 }

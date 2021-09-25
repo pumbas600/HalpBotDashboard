@@ -6,7 +6,7 @@ const doneTypingInterval = 1000;  //time in ms
 
 
 $(function() {
-    addFormIdMessage = $('#id').text();
+    addFormIdMessage = $('#idField').text();
     imageInput = $('#image');
 
     const previewImage = $('#previewImage');
@@ -66,7 +66,10 @@ function ToggleForms() {
 }
 
 function UpdateQuestionForm() {
-    $('#id').text($('.selected-row td:nth-child(1)').text());
+    const id = $('.selected-row td:nth-child(1)').text();
+
+    $('#idField').text(id);
+    $('#id').val(id);
     $('#topicId').val($('.selected-row td:nth-child(2)').attr('data-value'));
     $('#question').val($('.selected-row td:nth-child(3)').text());
     $('#answer').val($('.selected-row td:nth-child(4)').text());
@@ -86,7 +89,8 @@ function ShowPreviewImage() {
 }
 
 function ClearQuestionForm() {
-    $('#id').text(addFormIdMessage);
+    $('#idField').text(addFormIdMessage);
+    $('#id').val('-1');
     $('#topicId').val(1);
     $('#question').val('');
     $('#answer').val('');

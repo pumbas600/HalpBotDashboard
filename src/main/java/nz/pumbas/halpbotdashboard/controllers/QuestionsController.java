@@ -7,29 +7,24 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import nz.pumbas.halpbotdashboard.hibernate.models.Question;
 import nz.pumbas.halpbotdashboard.hibernate.models.Topic;
 import nz.pumbas.halpbotdashboard.hibernate.services.QuestionService;
+import nz.pumbas.halpbotdashboard.hibernate.services.TopicService;
 
 @Controller
 public class QuestionsController {
 
+    //Refer to: https://www.dariawan.com/tutorials/spring/spring-boot-thymeleaf-crud-example/
+
     private final QuestionService questionService;
+    private final TopicService topicService;
 
-    //private final List<Question> testQuestions = new ArrayList<>();
-    private final List<Topic> topics = new ArrayList<>();
-
-    public QuestionsController(QuestionService questionService) {
-//        this.testQuestions.add(new Question(1L, 1L, "This is a question", "Answer", "A", "B", "C"));
-//        this.testQuestions.add(new Question(2L, 1L, "This is another question", "Answer", "A", "B", "C"));
-//        this.testQuestions.add(new Question(3L, 2L, "And another one", "Answer", "A", "B", "C"));
-//        this.testQuestions.add(new Question(4L, 1L, "One more for goodluck!", "Answer", "A", "B", "C"));
-        this.topics.add(new Topic(1L, "deformation"));
-        this.topics.add(new Topic(2L, "microstructure"));
+    public QuestionsController(QuestionService questionService, TopicService topicService) {
         this.questionService = questionService;
+        this.topicService = topicService;
     }
 
     @GetMapping("/questions")
@@ -40,19 +35,19 @@ public class QuestionsController {
     }
 
     @PostMapping("/add-question")
-    public ModelAndView addQuestionForm(@ModelAttribute Question question) {
+    public ModelAndView addQuestionForm(@ModelAttribute("question") Question question) {
         System.out.println("Got question: " + question);
         return new ModelAndView("redirect:/questions");
     }
 
     @PostMapping("/edit-question")
-    public ModelAndView editQuestionForm(@ModelAttribute Question question) {
+    public ModelAndView editQuestionForm(@ModelAttribute("question") Question question) {
         System.out.println("Got edit post");
         return new ModelAndView("redirect:/questions");
     }
 
     @ModelAttribute("topics")
     public List<Topic> topics() {
-        return this.topics;
+        return this.topicService.list();
     }
 }
