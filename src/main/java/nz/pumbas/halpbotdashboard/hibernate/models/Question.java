@@ -1,7 +1,5 @@
 package nz.pumbas.halpbotdashboard.hibernate.models;
 
-import com.sun.istack.NotNull;
-
 import org.hibernate.validator.constraints.Length;
 import org.springframework.validation.annotation.Validated;
 
@@ -13,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Validated
 @Entity

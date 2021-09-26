@@ -69,6 +69,21 @@
     height: auto;
 }
 
+.logo-text {
+    transform: translate(-25px, -50px);
+}
+.logo-text h2 {
+    font-size: 50px;
+    line-height: 15px;
+    margin: 10px
+}
+
+.logo-text p {
+    font-size: 20px;
+    line-height: 20px;
+}
+
+
 /* Grids */
 
 .white {
@@ -88,9 +103,14 @@
     border: 1px solid #d7d7d7;
 }
 
+.table-view {
+    width: auto;
+    height: 100%;
+}
+
 .table-container {
-    width: 80%;
     overflow-x: auto;
+    margin-right: 400px;
 }
 
 .data-row {
@@ -123,10 +143,9 @@
 
 .side-pane {
     padding: 20px;
-    width: 20%;
+    width: 400px;
     right: 0;
     height: 100%;
-    position: absolute;
 }
 
 .form-control-aligned {
