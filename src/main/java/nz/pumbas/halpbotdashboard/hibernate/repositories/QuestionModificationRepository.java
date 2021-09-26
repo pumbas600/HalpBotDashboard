@@ -4,8 +4,9 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import nz.pumbas.halpbotdashboard.hibernate.models.Question;
+import nz.pumbas.halpbotdashboard.hibernate.models.QuestionModification;
 
-public interface QuestionRepository extends PagingAndSortingRepository<Question, Long>,
-    JpaSpecificationExecutor<Question>
+public interface QuestionModificationRepository extends PagingAndSortingRepository<QuestionModification, Long>,
+    JpaSpecificationExecutor<QuestionModification>
 {
 }

@@ -1,13 +1,14 @@
 let addFormIdMessage;
 let imageInput;
+let pageNumber;
 
 let typingTimer;                  //timer identifier
 const doneTypingInterval = 1000;  //time in ms
 
-
 $(function() {
     addFormIdMessage = $('#idField').text();
     imageInput = $('#image');
+    pageNumber = $('#data').attr('page');
 
     const previewImage = $('#previewImage');
     previewImage.on('error', function() {
@@ -56,11 +57,11 @@ function ToggleForms() {
 
     if (addForm.hasClass('hide')) {
         // Edit Question Form
-        form.attr('action', '/edit-question');
+        form.attr('action', `/questions/${pageNumber}/edit`);
     }
     else {
         // Add Question Form
-        form.attr('action', '/add-question');
+        form.attr('action', `/questions/${pageNumber}/add`);
         ClearQuestionForm();
     }
 }
@@ -90,7 +91,7 @@ function ShowPreviewImage() {
 
 function ClearQuestionForm() {
     $('#idField').text(addFormIdMessage);
-    $('#id').val('-1');
+    $('#id').val('');
     $('#topicId').val(1);
     $('#question').val('');
     $('#answer').val('');

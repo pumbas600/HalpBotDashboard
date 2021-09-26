@@ -139,6 +139,10 @@
     margin-bottom: 15px;
 }
 
+.page-numbers {
+    white-space: nowrap;
+}
+
 #previewImage {
     width: 100%;
     padding: 10px;

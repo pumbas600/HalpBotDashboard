@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>HalpBot Dashboard: Questions</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="js/questions.js"></script>
+    <script th:src="@{/js/questions.js}"></script>
 </head>
 <body>
+    <div id="data" class="hide" th:page="${current}"></div>
     <!-- Refer to https://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html#using-theach for syntax -->
     <div class="margin">
         <h2>Quiz Questions</h2>
@@ -56,17 +57,21 @@
                 </tr>
             </table>
         </div>
-
+        <br/><br/>
+        <div class="page-numbers">
+            <span th:if="${hasPrevious}"><a th:href="${'/questions?page=' + previous}">Previous</a></span>
+            <span th:if="${hasNext}"><a th:href="${'/questions?page=' + next}">Next</a></span>
+        </div>
     </div>
     <div class="split side-pane grey">
         <h3 class="add-form question-form-title">Add Question</h3>
         <h3 class="edit-form question-form-title hide">Edit Question</h3>
 
-        <form id="question-form" th:action="@{/add-question}" th:object="${question}" method="post">
+        <form id="question-form" th:action="${'/questions/' + current + '/add'}" th:object="${question}" method="post">
             <div class="aligned-form-group">
                 <label>Id:</label>
                 <div id="idField" class="float-right form-control-aligned hide-overflow form-control" readonly="readonly">Automatically generated</div>
-                <input type="number" class="hide" th:field="*{id}" placeholder="-1"/>
+                <input type="number" class="hide" th:field="*{id}"/>
             </div>
             <div class="aligned-form-group">
                 <label>Topic:</label>
@@ -79,31 +84,31 @@
             </div>
             <div class="form-group">
                 <label>Question:</label>
-                <textarea class="form-control" required th:field="*{question}"></textarea>
+                <textarea class="form-control" maxlength="1023" required th:field="*{question}"></textarea>
             </div>
             <div class="form-group">
                 <label>Answer:</label>
-                <textarea class="form-control" required th:field="*{answer}"></textarea>
+                <textarea class="form-control" maxlength="511" required th:field="*{answer}"></textarea>
             </div>
             <div class="form-group">
                 <label>Option B:</label>
-                <textarea class="form-control" required th:field="*{optionB}"></textarea>
+                <textarea class="form-control" maxlength="511" required th:field="*{optionB}"></textarea>
             </div>
             <div class="form-group">
                 <label>Option C:</label>
-                <textarea class="form-control" th:field="*{optionC}"></textarea>
+                <textarea class="form-control" maxlength="511" placeholder="This is optional" th:field="*{optionC}"></textarea>
             </div>
             <div class="form-group">
                 <label>Option D:</label>
-                <textarea class="form-control" th:field="*{optionD}"></textarea>
+                <textarea class="form-control" maxlength="511" placeholder="This is optional" th:field="*{optionD}"></textarea>
             </div>
             <div class="form-group">
                 <label>Explanation:</label>
-                <textarea class="form-control" th:field="*{explanation}"></textarea>
+                <textarea class="form-control" maxlength="2047" placeholder="This is optional" th:field="*{explanation}"></textarea>
             </div>
             <div class="form-group">
                 <label>Image Link:</label>
-                <input type="text" class="form-control" th:field="*{image}"/>
+                <input type="text" class="form-control" maxlength="255" placeholder="This is optional" th:field="*{image}"/>
                 <img id="previewImage" class="hide" src="" alt="Preview Image">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
