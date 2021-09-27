@@ -46,8 +46,13 @@ public class Question implements Serializable
     @Length(max = 2047, message = "The explanation must be less than 511 characters long")
     private String explanation;
 
-    @Length(max = 10, message = "The image link must be less than 255 characters")
+    @Length(max = 255, message = "The image link must be less than 255 characters")
     private String image;
+
+    private Status status;
+
+    private Long editedId;
+
     private final String dType = this.getClass().getSimpleName();
 
     public Question() {  }
@@ -102,6 +107,14 @@ public class Question implements Serializable
         return image;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public Long getEditedId() {
+        return editedId;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -136,6 +149,25 @@ public class Question implements Serializable
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public void setEditedId(Long editedId) {
+        this.editedId = editedId;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public void setEmptyFieldsNull() {
+        if (this.optionC.isEmpty())
+            this.optionC = null;
+        if (this.optionD.isEmpty())
+            this.optionD = null;
+        if (this.explanation.isEmpty())
+            this.explanation = null;
+        if (this.image.isEmpty())
+            this.image = null;
     }
 
     @Override

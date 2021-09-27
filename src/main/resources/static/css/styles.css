@@ -126,6 +126,10 @@
     text-overflow: ellipsis;
 }
 
+.unconfirmed {
+    background-color: #fcb49a;
+}
+
 .data-row:hover {
     background-color: #bceaad;
 }

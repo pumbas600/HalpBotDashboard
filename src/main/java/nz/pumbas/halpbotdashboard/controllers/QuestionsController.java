@@ -13,11 +13,9 @@ import java.util.List;
 
 import nz.pumbas.halpbotdashboard.hibernate.exceptions.BadResourceException;
 import nz.pumbas.halpbotdashboard.hibernate.exceptions.ResourceNotFoundException;
-import nz.pumbas.halpbotdashboard.hibernate.models.Modification;
 import nz.pumbas.halpbotdashboard.hibernate.models.Question;
-import nz.pumbas.halpbotdashboard.hibernate.models.QuestionModification;
+import nz.pumbas.halpbotdashboard.hibernate.models.Status;
 import nz.pumbas.halpbotdashboard.hibernate.models.Topic;
-import nz.pumbas.halpbotdashboard.hibernate.services.QuestionModificationService;
 import nz.pumbas.halpbotdashboard.hibernate.services.QuestionService;
 import nz.pumbas.halpbotdashboard.hibernate.services.TopicService;
 
@@ -27,18 +25,13 @@ public class QuestionsController {
     //Refer to: https://www.dariawan.com/tutorials/spring/spring-boot-thymeleaf-crud-example/
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    private final int ROWS_PER_PAGE = 25;
+    private static final int ROWS_PER_PAGE = 25;
 
-    private final QuestionModificationService questionModificationService;
     private final QuestionService questionService;
     private final TopicService topicService;
 
-    public QuestionsController(
-        QuestionModificationService questionModificationService,
-        QuestionService questionService,
-        TopicService topicService)
+    public QuestionsController(QuestionService questionService, TopicService topicService)
     {
-        this.questionModificationService = questionModificationService;
         this.questionService = questionService;
         this.topicService = topicService;
     }
@@ -48,7 +41,7 @@ public class QuestionsController {
         Model model,
         @RequestParam(value = "page", defaultValue = "1") int pageNumber)
     {
-        List<Question> questions = this.questionService.list(pageNumber, ROWS_PER_PAGE);
+        List<Question> questions = this.questionService.list(pageNumber - 1, ROWS_PER_PAGE);
         long questionCount = this.questionService.count();
 
         boolean hasPrevious = 1 < pageNumber;
@@ -71,8 +64,9 @@ public class QuestionsController {
         @ModelAttribute("addedQuestion") Question addedQuestion)
     {
         try {
-            QuestionModification questionModification = QuestionModification.of(addedQuestion, Modification.ADD);
-            this.questionModificationService.save(questionModification);
+            addedQuestion.setStatus(Status.ADDED);
+            addedQuestion.setEmptyFieldsNull();
+            this.questionService.save(addedQuestion);
         }
         catch (BadResourceException e) {
             String errorMessage = e.getMessage();
@@ -91,8 +85,12 @@ public class QuestionsController {
 
             // Check that a change has actually been made
             if (!originalQuestion.equals(editedQuestion)) {
-                QuestionModification questionModification = QuestionModification.of(editedQuestion, Modification.EDIT);
-                this.questionModificationService.save(questionModification);
+                editedQuestion.setStatus(Status.EDITED);
+                editedQuestion.setEditedId(editedQuestion.getId());
+                editedQuestion.setId(null);
+                editedQuestion.setEmptyFieldsNull();
+
+                this.questionService.save(editedQuestion);
             }
          }
         catch (ResourceNotFoundException | BadResourceException e) {

@@ -19,10 +19,12 @@ import nz.pumbas.halpbotdashboard.hibernate.repositories.QuestionRepository;
 public class QuestionService
 {
     private final QuestionRepository questionRepository;
+    private final TopicService topicService;
 
     @Autowired
-    public QuestionService(QuestionRepository questionRepository) {
+    public QuestionService(QuestionRepository questionRepository, TopicService topicService) {
         this.questionRepository = questionRepository;
+        this.topicService = topicService;
     }
 
     public boolean existsById(@Nullable Long id) {
@@ -46,6 +48,17 @@ public class QuestionService
         Pageable sortedIdAsc = PageRequest.of(pageNumber, rowsPerPage, Sort.by("id").ascending());
         this.questionRepository.findAll(sortedIdAsc).forEach(questions::add);
         return questions;
+    }
+
+    public Question save(Question question) throws BadResourceException {
+        if (this.isValidQuestion(question)) {
+            return this.questionRepository.save(question);
+        }
+        throw new BadResourceException("The topic is missing or does not exist");
+    }
+
+    public boolean isValidQuestion(Question question) {
+        return this.topicService.existsById(question.getTopicId());
     }
 
     public Long count() {
