@@ -86,6 +86,30 @@
 
 /* Grids */
 
+.circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.display-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.header {
+    margin-right: 100px;
+}
+
+.status {
+    display: flex;
+    margin-top: 5px;
+}
+
+.status p {
+    padding: 5px;
+}
+
 .white {
     background-color: white;
 }
@@ -110,7 +134,14 @@
 
 .table-container {
     overflow-x: auto;
-    margin-right: 400px;
+}
+
+.left-container {
+    margin-right: 400px !important;
+}
+
+.description {
+    margin: 20px
 }
 
 .data-row {
@@ -127,6 +158,9 @@
 }
 
 .unconfirmed {
+    background-color: #fcc6b4;
+}
+.unconfirmed.grey {
     background-color: #fcb49a;
 }
 
@@ -164,6 +198,15 @@
 
 .page-numbers {
     white-space: nowrap;
+}
+
+.page-numbers div {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.disabled {
+    color: #7e7e7e;
 }
 
 #previewImage {

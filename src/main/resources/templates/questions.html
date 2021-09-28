@@ -12,8 +12,14 @@
     <div id="data" class="hide" th:page="${current}"></div>
     <!-- Refer to https://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html#using-theach for syntax -->
     <div class="margin table-view">
-        <h2>Quiz Questions</h2>
-        <div class="table-container">
+        <div class="display-row">
+            <h2 class="header">Quiz Questions</h2>
+            <div class="status">
+                <div class="circle unconfirmed grey"></div>
+                <p>To be confirmed</p>
+            </div>
+        </div>
+        <div class="table-container left-container">
             <table class="datatable">
                 <tr>
                     <th class="small-column">Id</th>
@@ -34,34 +40,56 @@
                     <td class="medium-column"
                         th:text="${topics[__${question.getTopicId() - 1}__].getTopic()}" th:data-value="${question.getTopicId()}">
                     </td>
-                    <td class="extra-large-column expand-on-hover"
+                    <td class="extra-large-column"
                         th:text="${question.getQuestion()}">
                     </td>
-                    <td class="extra-large-column expand-on-hover"
+                    <td class="extra-large-column"
                         th:text="${question.getAnswer()}">
                     </td>
-                    <td class="large-column expand-on-hover"
+                    <td class="large-column"
                         th:text="${question.getOptionB()}">
                     </td>
-                    <td class="large-column expand-on-hover"
+                    <td class="large-column"
                         th:text="${question.getOptionC()}">
                     </td>
-                    <td class="large-column expand-on-hover"
+                    <td class="large-column"
                         th:text="${question.getOptionD()}">
                     </td>
-                    <td class="extra-large-column expand-on-hover"
+                    <td class="extra-large-column"
                         th:text="${question.getExplanation()}">
                     </td>
-                    <td class="medium-column expand-on-hover"
+                    <td class="medium-column"
                         th:text="${question.getImage()}">
                     </td>
                 </tr>
             </table>
         </div>
-        <br/><br/>
-        <div class="page-numbers">
-            <span th:if="${hasPrevious}"><a th:href="${'/questions?page=' + previous}">Previous</a></span>
-            <span th:if="${hasNext}"><a th:href="${'/questions?page=' + next}">Next</a></span>
+        <br/>
+        <div class="left-container">
+            <div th:if="${pageCount != 1}" class="page-numbers display-row">
+                <div>
+                    <a th:if="${hasPrevious}" th:href="${'/questions?page=' + previous}">Previous</a>
+                    <p th:if="${!hasPrevious}" class="disabled">Previous</p>
+                </div>
+                <div th:each="i : ${#numbers.sequence(1, pageCount)}">
+                    <a th:href="${'/questions?page=' + i}" th:text="${i}"></a>
+                </div>
+                <div>
+                    <a th:if="${hasNext}" th:href="${'/questions?page=' + next}">Next</a>
+                    <p th:if="${!hasNext}" class="disabled">Next</p>
+                </div>
+            </div>
+            <div class="description">
+                <p>
+                    You can create new questions using the form on the right. Alternatively, you can click on a row to edit it.
+                    You can then click on the selected-row again to unselect it, allowing you to add new questions once again.
+                    <br>
+                    <br>
+                    Once you have submitted a change - whether that be a new question or an edit - it will appear highlighted
+                    in orange to indicate that the change is pending approval. When it is confirmed, it will then become
+                    available in the Halpbot quiz questions.
+                </p>
+            </div>
         </div>
     </div>
     <div class="split side-pane grey">

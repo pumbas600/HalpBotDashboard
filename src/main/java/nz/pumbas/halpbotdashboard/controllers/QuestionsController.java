@@ -43,15 +43,18 @@ public class QuestionsController {
     {
         List<Question> questions = this.questionService.list(pageNumber - 1, ROWS_PER_PAGE);
         long questionCount = this.questionService.count();
+        long pageCount = (long) Math.ceil(questionCount / (double)ROWS_PER_PAGE);
 
         boolean hasPrevious = 1 < pageNumber;
-        boolean hasNext = questionCount > ((long) pageNumber * ROWS_PER_PAGE);
+        boolean hasNext = pageNumber < pageCount;
+
 
         model.addAttribute("hasPrevious", hasPrevious);
         model.addAttribute("previous", pageNumber - 1);
         model.addAttribute("hasNext", hasNext);
         model.addAttribute("next", pageNumber + 1);
         model.addAttribute("current", pageNumber);
+        model.addAttribute("pageCount", pageCount);
 
         model.addAttribute("question", new Question()); //This will be populated by the form.
         model.addAttribute("questions", questions);

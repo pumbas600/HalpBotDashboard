@@ -45,7 +45,7 @@ public class QuestionService
 
     public List<Question> list(int pageNumber, int rowsPerPage) {
         List<Question> questions = new ArrayList<>();
-        Pageable sortedIdAsc = PageRequest.of(pageNumber, rowsPerPage, Sort.by("id").ascending());
+        Pageable sortedIdAsc = PageRequest.of(pageNumber, rowsPerPage, Sort.by("topicId", "id").ascending());
         this.questionRepository.findAll(sortedIdAsc).forEach(questions::add);
         return questions;
     }
